@@ -427,16 +427,67 @@ public class EvaluationService {
 	 * quick brown fox jumps over the lazy dog.
 	 */
 	static class RotationalCipher {
+		private int key;
+		
 		public RotationalCipher(int key) {
 			super();
+			this.key = key;
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
-		}
+			String initial = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
 
-	}
+            String abc = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
+
+            String def = "";
+
+            String results = "";
+
+            for (int i = 0; i < key; ++i) {
+
+                char x = abc.charAt(0);
+
+                char y = abc.charAt(1);
+
+                def = abc.substring(2) + x + y;
+
+                abc = def;
+
+            }
+
+            if (string.length() < 2) {
+
+                int indexOf = initial.indexOf(string.charAt(0));
+
+                results += abc.charAt(indexOf);
+
+                return results;
+
+            } else {
+
+                for (int i = 0; i < string.length(); ++i) {
+
+                    if (Character.isLetter(string.charAt(i))) {
+
+                        int indexOf = initial.indexOf(string.charAt(i));
+
+                        results += abc.charAt(indexOf);
+
+                    } else {
+
+                        results += string.charAt(i);
+
+                    }
+
+                }
+
+                return results;
+
+            }
+
+        }
+
+    }
 
 	/**
 	 * 12. Given a number n, determine what the nth prime is.
