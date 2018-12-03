@@ -1,11 +1,10 @@
 package com.revature.eval.java.core;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.*;
 
 public class EvaluationService {
@@ -489,21 +488,20 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			String plain = "0123456789abcdefghijklmnopqrstuvwxyz";
+			String abc = "0123456789abcdefghijklmnopqrstuvwxyz";
 			String cipher = "0123456789zyxwvutsrqponmlkjihgfedcba";
-			String placeholder = "";
+			String ph = "";
 			string = string.replaceAll("[^a-zA-Z0-9]", "");
 			string = string.toLowerCase();
 			for (int i = 0; i < string.length(); i++) {
 				char symbol = string.charAt(i);
-				int index = plain.indexOf(symbol);
-				placeholder += Character.toString(cipher.charAt(index));
+				int index = abc.indexOf(symbol);
+				ph += Character.toString(cipher.charAt(index));
 				if ((i + 1) % 5 == 0 && i < string.length() - 1) {
-					placeholder += " ";
+					ph += " ";
 				}
 			}
-			return placeholder;
+			return ph;
 		}
 
 		/**
@@ -514,17 +512,17 @@ public class EvaluationService {
 		 */
 		public static String decode(String string) {
 			// TODO Write an implementation for this method declaration
-			String plain = "0123456789abcdefghijklmnopqrstuvwxyz";
+			String abc = "0123456789abcdefghijklmnopqrstuvwxyz";
 			String cipher = "0123456789zyxwvutsrqponmlkjihgfedcba";
-			String placeholder = "";
+			String ph = "";
 			string = string.replaceAll("[^a-zA-Z0-9]", "");
 			string = string.toLowerCase();
 			for (int i = 0; i < string.length(); i++) {
 				char symbol = string.charAt(i);
 				int index = cipher.indexOf(symbol);
-				placeholder += Character.toString(plain.charAt(index));
+				ph += Character.toString(abc.charAt(index));
 			}
-			return placeholder;
+			return ph;
 		}
 	}
 
@@ -572,7 +570,10 @@ public class EvaluationService {
 
 		sum += ((end == 'X') ? 10 : (end - '0'));
 
-		return (sum % 11 == 0);
+		if (sum % 11 == 0) {
+
+		}
+		return true;
 
 	}
 
@@ -617,8 +618,15 @@ public class EvaluationService {
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
 		// TODO Write an implementation for this method declaration
+		long gigasecond = 1000000000;
+		if (!given.isSupported(ChronoUnit.SECONDS)) {
+			LocalDate date = (LocalDate) given;
+			LocalDateTime newDate = date.atStartOfDay();
+			return newDate.plus(gigasecond, ChronoUnit.SECONDS);
+		}
 
-		return null;
+		return given.plus(gigasecond, ChronoUnit.SECONDS);
+
 	}
 
 	/**
